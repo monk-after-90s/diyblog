@@ -1,0 +1,10 @@
+# Text backup files
+*.bak
+
+# Database
+*.sqlite3
+*__pycache__*
+.DS_Store
+.idea/
+test*.py
+CSRF_test.html
