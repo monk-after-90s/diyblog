@@ -7,4 +7,4 @@
 .DS_Store
 .idea/
 test*.py
-CSRF_test.html
+test*.html
