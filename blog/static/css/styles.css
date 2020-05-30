@@ -3,3 +3,8 @@
     padding: 0;
     list-style: none;
 }
+
+.home_welcome {
+    margin: 60px auto;
+    text-align: center;
+}
