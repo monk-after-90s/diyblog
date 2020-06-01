@@ -1,0 +1,23 @@
+{% extends 'base_generic.html' %}
+{% block content %}
+    {% if form.errors %}
+        <p>用户名与密码不符，请重新输入:</p>
+    {% endif %}
+    {% if next %}
+        {% if user.is_authenticated %}
+            <p>你的账户无权进入该页面。若要继续，请重新登入有权限的账户。</p>
+        {% else %}
+            <p>请登录以查看该页面。</p>
+        {% endif %}
+    {% endif %}
+
+    <form method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+        <table>
+            {{ form.as_table }}
+        </table>
+        <button type="submit">登录</button>
+        <input type="hidden" name="next" value="{{ next }}">
+    </form>
+
+{% endblock %}
