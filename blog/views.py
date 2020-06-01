@@ -11,6 +11,6 @@ def index(request):
     return render(request, 'blog/index.html')
 
 
-class RegisterView(CreateView):
+class BlogAuthorDetailView(DetailView):
     model = BlogUser
     fields = ['username', 'password', 'first_name', 'last_name', 'email']
