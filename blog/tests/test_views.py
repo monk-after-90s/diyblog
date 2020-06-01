@@ -23,3 +23,16 @@ class LoginViewTest(TestCase):
         response = self.client.get(reverse('index'))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(str(response.context['user']), 'testuser')
+
+
+class LogoutViewTest(TestCase):
+    def setUp(self) -> None:
+        testuser = User.objects.create_user(username='testuser', password='bdakfkweqhfewfbds')
+        testuser.save()
+        login_res = self.client.login(username='testuser', password='bdakfkweqhfewfbds')
+        self.assertEqual(login_res, True)
+
+    def test_user_logged_out(self):
+        response = self.client.get(reverse('logout'))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(str(response.context['user']), 'AnonymousUser')
