@@ -1,3 +1,7 @@
+from django.contrib.auth.models import User
 from django.db import models
 
-# Create your models here.
+
+
+class BlogUser(User):
+    bio_info = models.TextField(help_text='Enter some biographical information.')

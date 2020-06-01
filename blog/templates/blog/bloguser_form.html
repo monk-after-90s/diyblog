@@ -1,0 +1,10 @@
+{% extends 'base_generic.html' %}
+{% block content %}
+    <form method="post" action="">
+        {% csrf_token %}
+        <table>
+            {{ form.as_table }}
+        </table>
+        <button>注册</button>
+    </form>
+{% endblock %}
