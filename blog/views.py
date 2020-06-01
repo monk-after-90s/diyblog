@@ -1,9 +1,11 @@
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
 
 # Create your views here.
-from django.views import generic
-from django.views.generic import CreateView, DetailView
+from django.urls import reverse
+from django.views.generic import DetailView
 
+from blog.forms import BlogUserModelForm
 from blog.models import BlogUser
 
 
@@ -13,9 +15,20 @@ def index(request):
 
 class BlogAuthorDetailView(DetailView):
     model = BlogUser
-    fields = ['username', 'password', 'first_name', 'last_name', 'email']
 
 
-class BlogUserCreateView(CreateView):
-    model = BlogUser
-    fields = ['username', 'password', 'first_name', 'last_name', 'email']
+def register_view(request):
+    if request.method == 'GET':
+        form = BlogUserModelForm()
+    else:
+        form = BlogUserModelForm(request.POST)
+        if form.is_valid():
+            new_blog_user = BlogUser.objects.create_user(
+                **{key: request.POST[key] for key in BlogUserModelForm.Meta.fields})
+            new_blog_user.save()
+            return HttpResponseRedirect(reverse('bloguser-detail', args=[str(new_blog_user.pk)]))
+
+    context = {
+        'form': form
+    }
+    return render(request, 'blog/bloguser_form.html', context=context)
