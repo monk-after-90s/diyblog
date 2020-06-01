@@ -19,5 +19,6 @@
         <button class='btn btn-default btn-lg' type="submit">登录</button>
         <input type="hidden" name="next" value="{{ next }}">
     </form>
+    <a href="{% url 'password_reset' %}">忘记密码?</a>
 
 {% endblock %}
