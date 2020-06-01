@@ -6,5 +6,5 @@
 *__pycache__*
 .DS_Store
 .idea/
-test*.py
-test*.html
+test.py
+test.html
