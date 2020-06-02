@@ -13,7 +13,7 @@ def index(request):
     return render(request, 'blog/index.html')
 
 
-class BlogAuthorDetailView(DetailView):
+class BlogUserDetailView(DetailView):
     model = BlogUser
 
 
