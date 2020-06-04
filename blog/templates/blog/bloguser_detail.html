@@ -1,13 +1,22 @@
 {% extends 'base_generic.html' %}
 {% block content %}
-    <h1>Name: {{ bloguser }}</h1>
-    <p><strong>用户名:</strong>{{ bloguser.username }}</p>
-    <p><strong>Email:</strong>{{ bloguser.email }}</p>
-    {#    <p><strong>密码:</strong>{{ bloguser.password }}</p>#}
-
+    <h1>名字: {{ bloguser }}</h1>
+    <h2>用户名:{{ bloguser.username }}</h2>
+    <h2>Email:{{ bloguser.email }}</h2>
+    <br>
+    <h2>Bio</h2>
+    <br>
+    <p>{{ bloguser.bio_info }}</p>
+    <br>
+    <h2>博客列表</h2>
     <div style="margin-left:20px;margin-top:20px">
-        {#todo blog的ListView#}
+        <ul>
+            {% for blog in bloguser.blog_set.all %}
+                <li>{{ blog.name }}({{ blog.post_date }})</li>
+            {% endfor %}
+        </ul>
     </div>
+
 
 
 {% endblock %}
