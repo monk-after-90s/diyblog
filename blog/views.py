@@ -6,7 +6,7 @@ from django.urls import reverse
 from django.views.generic import DetailView, ListView
 
 from blog.forms import BlogUserModelForm
-from blog.models import BlogUser
+from blog.models import BlogUser, Blog
 
 
 def index(request):
@@ -32,6 +32,11 @@ def register_view(request):
         'form': form
     }
     return render(request, 'blog/bloguser_form.html', context=context)
+
+
+class BlogListView(ListView):
+    model = Blog
+    paginate_by = 5
 
 
 class BlogUserListView(ListView):

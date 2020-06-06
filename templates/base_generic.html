@@ -17,7 +17,7 @@
             {% block sidebar %}
                 <ul class="sidebar-nav">
                     <li><a href="{% url 'index' %}">Home</a></li>
-                    <li><a href="#">全部博客</a></li>
+                    <li><a href="{% url 'blogs' %}">全部博客</a></li>
                     <li><a href="{% url 'bloggers' %}">全部作者</a></li>
                     <br>
                     {% if user.is_authenticated %}
