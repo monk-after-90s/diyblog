@@ -44,3 +44,7 @@ class BlogUserListView(ListView):
 
     def get_queryset(self):
         return BlogUser.objects.filter(blog__id__gt=0)
+
+
+class BlogDetailView(DetailView):
+    model = Blog

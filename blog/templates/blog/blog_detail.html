@@ -1,0 +1,18 @@
+{% extends 'base_generic.html' %}
+{% block content %}
+    <h1>{{ blog.name }}</h1>
+    <h2>发布日期 {{ blog.post_date }}</h2>
+    <h2>作者:<a href="{% url 'bloguser-detail' blog.author.pk %}">{{ blog.author }}</a></h2>
+    <h2>正文:</h2>
+    <br>
+    <p>{{ blog.content }}</p>
+    <div style="margin-left:20px;margin-top:20px">
+        <h2>评论</h2>
+        <hr>
+{#        <ul>#}
+        {#            {% for comment in blog.comment_set.all %}#}
+        {#                <li>{{ comment.bloguser }}({{ comment.post_datetime }}) - {{  }}</li>#}
+        {#            {% endfor %}#}
+        {#        </ul>#}
+    </div>
+{% endblock %}

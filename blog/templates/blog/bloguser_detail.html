@@ -12,7 +12,7 @@
     <div style="margin-left:20px;margin-top:20px">
         <ul>
             {% for blog in bloguser.blog_set.all %}
-                <li>{{ blog.name }}({{ blog.post_date }})</li>
+                <li><a href="{% url 'blog' blog.pk %}">{{ blog.name }}</a>({{ blog.post_date }})</li>
             {% endfor %}
         </ul>
     </div>
