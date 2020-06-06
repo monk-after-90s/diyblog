@@ -19,6 +19,9 @@ class Comment(models.Model):
     post_date = models.DateTimeField(auto_now_add=True)
     bloguser = models.ForeignKey('BlogUser', on_delete=models.SET_NULL, null=True)
 
+    class Meta:
+        ordering = ['post_date']
+
 
 class BlogUser(User):
     bio_info = models.TextField(null=True, blank=True, help_text='Enter some biographical information.')
