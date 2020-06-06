@@ -16,11 +16,11 @@ class Blog(models.Model):
 
 class Comment(models.Model):
     blog = models.ForeignKey(Blog, on_delete=models.CASCADE)
-    post_date = models.DateTimeField(auto_now_add=True)
+    post_datetime = models.DateTimeField(auto_now_add=True)
     bloguser = models.ForeignKey('BlogUser', on_delete=models.SET_NULL, null=True)
 
     class Meta:
-        ordering = ['post_date']
+        ordering = ['post_datetime']
 
 
 class BlogUser(User):
