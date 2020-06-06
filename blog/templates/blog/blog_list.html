@@ -5,7 +5,7 @@
         <ul>
             {% for blog in blog_list %}
                 <li>
-                    <a href="{% url 'blog-detail' %}">{{ blog.name }}</a>({{ blog.post_date }})--
+                    <a href="{% url 'blog' blog.pk %}">{{ blog.name }}</a>({{ blog.post_date }})--
                     <a href="{% url 'bloguser-detail' blog.author.pk %}">{{ blog.author }}</a>
                 </li>
             {% endfor %}
