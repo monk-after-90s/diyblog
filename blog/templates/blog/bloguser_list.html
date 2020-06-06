@@ -1,0 +1,12 @@
+{% extends 'base_generic.html' %}
+{% block content %}
+    <h1>全部作者</h1>
+    <ul>
+        {% if  bloguser_list %}
+            {% for bloguser in bloguser_list %}
+                <li><a href="{% url 'bloguser-detail' bloguser.pk %}">{{ bloguser }}</a></li>
+            {% endfor %}
+
+        {% endif %}
+    </ul>
+{% endblock %}

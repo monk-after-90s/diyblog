@@ -3,7 +3,7 @@ from django.shortcuts import render
 
 # Create your views here.
 from django.urls import reverse
-from django.views.generic import DetailView
+from django.views.generic import DetailView, ListView
 
 from blog.forms import BlogUserModelForm
 from blog.models import BlogUser
@@ -32,3 +32,10 @@ def register_view(request):
         'form': form
     }
     return render(request, 'blog/bloguser_form.html', context=context)
+
+
+class BlogUserListView(ListView):
+    model = BlogUser
+
+    def get_queryset(self):
+        return BlogUser.objects.filter(blog__id__gt=0)
