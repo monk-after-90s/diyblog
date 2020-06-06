@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 
@@ -5,8 +6,8 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.views.generic import DetailView, ListView
 
-from blog.forms import BlogUserModelForm
-from blog.models import BlogUser, Blog
+from blog.forms import BlogUserModelForm, CommentModelForm
+from blog.models import BlogUser, Blog, Comment
 
 
 def index(request):
@@ -48,3 +49,26 @@ class BlogUserListView(ListView):
 
 class BlogDetailView(DetailView):
     model = Blog
+
+
+@login_required
+def comment_create_view(request, blog_pk: int):
+    blog = Blog.objects.get(pk=blog_pk)
+    if request.method == 'GET':
+        blog = Blog.objects.get(pk=blog_pk)
+        form = CommentModelForm()
+        context = {
+            'form': form,
+            'blog': blog
+        }
+        return render(request, 'blog/comment_form.html', context=context)
+    else:
+        form = CommentModelForm(request.POST)
+        if form.is_valid():
+            new_comment = Comment.objects.create(
+                content=form.cleaned_data['content'],
+                blog=blog,
+                bloguser=BlogUser.objects.get(pk=(request.user.pk))
+            )
+            new_comment.save()
+        return HttpResponseRedirect(reverse('blog', args=(blog_pk,)))

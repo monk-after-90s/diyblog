@@ -9,10 +9,12 @@
     <div style="margin-left:20px;margin-top:20px">
         <h2>评论</h2>
         <hr>
-{#        <ul>#}
-        {#            {% for comment in blog.comment_set.all %}#}
-        {#                <li>{{ comment.bloguser }}({{ comment.post_datetime }}) - {{  }}</li>#}
-        {#            {% endfor %}#}
-        {#        </ul>#}
+        <ul>
+            {% for comment in blog.comment_set.all %}
+                <li>{{ comment.bloguser }}({{ comment.post_datetime }}) - {{ comment.content }}</li>
+                <hr>
+            {% endfor %}
+        </ul>
+        <a href="{% url 'comment-create' blog.pk %}">添加评论</a>
     </div>
 {% endblock %}

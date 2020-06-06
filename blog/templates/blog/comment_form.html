@@ -1,0 +1,11 @@
+{% extends 'base_generic.html' %}
+{% block content %}
+    <p>对该文章进行评论:<a href="{% url 'blog' blog.pk %}">{{ blog.name }}</a></p>
+    <form action="" method="post">
+        {% csrf_token %}
+        <table>
+            {{ form.as_table }}
+        </table>
+        <button>提交</button>
+    </form>
+{% endblock %}

@@ -21,6 +21,7 @@ class Comment(models.Model):
     blog = models.ForeignKey(Blog, on_delete=models.CASCADE)
     post_datetime = models.DateTimeField(auto_now_add=True)
     bloguser = models.ForeignKey('BlogUser', on_delete=models.SET_NULL, null=True)
+    content = models.TextField(help_text='键入对该博客的评论')
 
     class Meta:
         ordering = ['post_datetime']
