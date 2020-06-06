@@ -1,7 +1,10 @@
 from django.contrib import admin
 
 # Register your models here.
-from blog.models import BlogUser, Blog
+from blog.models import BlogUser, Blog, Comment
+
+admin.site.register(Blog)
+admin.site.register(Comment)
 
 
 class BlogInline(admin.TabularInline):
