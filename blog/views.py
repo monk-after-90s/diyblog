@@ -7,7 +7,7 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.views.generic import DetailView, ListView, CreateView
 
-from blog.forms import BlogUserModelForm, CommentModelForm
+from blog.forms import BlogUserModelForm
 from blog.models import BlogUser, Blog, Comment
 
 
