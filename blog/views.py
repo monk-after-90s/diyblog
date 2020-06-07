@@ -1,10 +1,11 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
 # Create your views here.
 from django.urls import reverse
-from django.views.generic import DetailView, ListView
+from django.views.generic import DetailView, ListView, CreateView
 
 from blog.forms import BlogUserModelForm, CommentModelForm
 from blog.models import BlogUser, Blog, Comment
@@ -64,24 +65,40 @@ class CommentDetailView(DetailView):
     model = Comment
 
 
-@login_required
-def comment_create_view(request, blog_pk: int):
-    blog = Blog.objects.get(pk=blog_pk)
-    if request.method == 'GET':
-        blog = Blog.objects.get(pk=blog_pk)
-        form = CommentModelForm()
-        context = {
-            'form': form,
-            'blog': blog
-        }
-        return render(request, 'blog/comment_form.html', context=context)
-    else:
-        form = CommentModelForm(request.POST)
-        if form.is_valid():
-            new_comment = Comment.objects.create(
-                content=form.cleaned_data['content'],
-                blog=blog,
-                bloguser=BlogUser.objects.get(pk=(request.user.pk))
-            )
-            new_comment.save()
-        return HttpResponseRedirect(reverse('blog', args=(blog_pk,)))
+# @login_required
+# def comment_create_view(request, blog_pk: int):
+#     blog = Blog.objects.get(pk=blog_pk)
+#     if request.method == 'GET':
+#         blog = Blog.objects.get(pk=blog_pk)
+#         form = CommentModelForm()
+#         context = {
+#             'form': form,
+#             'blog': blog
+#         }
+#         return render(request, 'blog/comment_form.html', context=context)
+#     else:
+#         form = CommentModelForm(request.POST)
+#         if form.is_valid():
+#             new_comment = Comment.objects.create(
+#                 content=form.cleaned_data['content'],
+#                 blog=blog,
+#                 bloguser=BlogUser.objects.get(pk=(request.user.pk))
+#             )
+#             new_comment.save()
+#         return HttpResponseRedirect(reverse('blog', args=(blog_pk,)))
+class CommentCreateView(LoginRequiredMixin, CreateView):
+    fields = ['content']
+    model = Comment
+
+    def get_context_data(self, **kwargs):
+        context = super(CommentCreateView, self).get_context_data(**kwargs)
+        context['blog'] = Blog.objects.get(pk=int(self.kwargs['blog_pk']))
+        return context
+
+    def form_valid(self, form):
+        form.instance.bloguser = BlogUser.objects.get(pk=int(self.request.user.pk))
+        form.instance.blog = get_object_or_404(Blog, pk=int(self.kwargs['blog_pk']))
+        return super(CommentCreateView, self).form_valid(form)
+
+    def get_success_url(self):
+        return reverse('blog', args=(str(self.kwargs['blog_pk']),))

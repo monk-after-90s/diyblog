@@ -1,6 +1,6 @@
 {% extends 'base_generic.html' %}
 {% block content %}
-    <p>对该文章进行评论:<a href="{% url 'blog' blog.pk %}">{{ blog.name }}</a></p>
+    <p>对该文章进行评论:<a href="{{ blog.get_absolute_url }}">{{ blog.name }}</a></p>
     <form action="" method="post">
         {% csrf_token %}
         <table>
