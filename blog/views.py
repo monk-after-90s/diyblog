@@ -60,6 +60,10 @@ class BlogDetailView(DetailView):
     model = Blog
 
 
+class CommentDetailView(DetailView):
+    model = Comment
+
+
 @login_required
 def comment_create_view(request, blog_pk: int):
     blog = Blog.objects.get(pk=blog_pk)

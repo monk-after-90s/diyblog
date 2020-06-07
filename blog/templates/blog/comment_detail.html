@@ -1,0 +1,7 @@
+{% extends 'base_generic.html' %}
+{% block content %}
+    <h1><a href="{{ comment.blog.get_absolute_url }}">{{ comment.blog.name }}</a></h1>
+    <div style="margin-left:20px;margin-top:20px">
+        {{ comment.bloguser }}({{ comment.post_datetime }}) - {{ comment.content }}
+    </div>
+{% endblock %}
