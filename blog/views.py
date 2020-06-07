@@ -52,6 +52,7 @@ class BlogListView(ListView):
 
 class BlogUserListView(ListView):
     model = BlogUser
+    template_name = 'blog/blogger_list.html'
 
     def get_queryset(self):
         return BlogUser.objects.filter(blog__id__gt=0)
