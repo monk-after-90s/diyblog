@@ -11,7 +11,7 @@
     <h2>博客列表</h2>
     <div style="margin-left:20px;margin-top:20px">
         <ul>
-            {% for blog in bloguser.blog_set.all %}
+            {% for blog in blog_list %}
                 <li><a href="{% url 'blog' blog.pk %}">{{ blog.name }}</a>({{ blog.post_date }})</li>
             {% endfor %}
         </ul>

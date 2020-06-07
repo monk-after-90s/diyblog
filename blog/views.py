@@ -14,8 +14,17 @@ def index(request):
     return render(request, 'blog/index.html')
 
 
-class BlogUserDetailView(DetailView):
-    model = BlogUser
+class BlogUserDetailView(ListView):
+    model = Blog
+    template_name = 'blog/bloguser_detail.html'
+
+    def get_queryset(self):
+        return Blog.objects.filter(author_id=int(self.kwargs['pk']))
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(object_list=object_list, **kwargs)
+        context['bloguser'] = BlogUser.objects.get(pk=int(self.kwargs['pk']))
+        return context
 
 
 def register_view(request):
