@@ -26,6 +26,9 @@ class Comment(models.Model):
     class Meta:
         ordering = ['post_datetime']
 
+    def __str__(self):
+        return f'{self.bloguser}({self.post_datetime}) - {self.content}'
+
 
 class BlogUser(User):
     bio_info = models.TextField(null=True, blank=True, help_text='Enter some biographical information.')
