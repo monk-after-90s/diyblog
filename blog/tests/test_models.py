@@ -99,3 +99,30 @@ class CommentModelTest(TestCase):
     def test_comment_bloguser_is_BlogUser(self):
         comment = Comment.objects.get(pk=1)
         self.assertEqual(comment.bloguser, BlogUser.objects.get(pk=2))
+
+
+class BlogUserModelTest(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        BlogUser(username='testbloguser',
+                 first_name='test',
+                 last_name='bloguser',
+                 password='dflewqlr23ru23u3423ryqe9fyq348g',
+                 email='nkdwkfda@qnewfnaf.com',
+                 bio_info='测试用的博客作者').save()
+
+    def test_get_absolute_url(self):
+        bloguser = BlogUser.objects.get(pk=1)
+        self.assertEqual(bloguser.get_absolute_url(), '/blog/bloguser/1/')
+
+    def test_fields_label(self):
+        bloguser = BlogUser.objects.get(pk=1)
+        self.assertEqual(bloguser._meta.get_field('bio_info').verbose_name, 'bio info')
+
+    def test_fields_length(self):
+        bloguser = BlogUser.objects.get(pk=1)
+        self.assertEqual(bloguser._meta.get_field('bio_info').max_length, 200)
+
+    def object_name_is_first_name_last_name(self):
+        bloguser = BlogUser.objects.get(pk=1)
+        self.assertEqual(str(bloguser), f'{bloguser.first_name} {bloguser.last_name}')
