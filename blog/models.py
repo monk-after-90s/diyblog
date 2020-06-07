@@ -27,7 +27,7 @@ class Comment(models.Model):
         ordering = ['post_datetime']
 
     def __str__(self):
-        return f'{self.bloguser}({self.post_datetime}) - {self.content}'
+        return f'{self.bloguser}({self.post_datetime}) - {self.content[:75]}'
 
 
 class BlogUser(User):
