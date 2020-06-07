@@ -159,3 +159,40 @@ class BlogDetailViewTest(TestCase):
     def test_blog_detail_view_is_accessable_at_expected_name(self):
         response = self.client.get(reverse('blog', kwargs={'pk': 1}))
         self.assertEqual(response.status_code, 200)
+
+
+class BloggerListViewTest(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        for i in range(17):
+            author = BlogUser(username=f'testbloguser{i}',
+                              first_name=f'test{i}',
+                              last_name=f'bloguser{i}',
+                              password='dflewqlr23ru23u3423ryqe9fyq348g',
+                              email='nkdwkfda@qnewfnaf.com',
+                              bio_info=f'测试用的博客作者{i}')
+            author.save()
+            if i < 10:
+                Blog.objects.create(
+                    author=author,
+                    content=f'这是一个测试用的博客',
+                    name=f'测试博客'
+                ).save()
+
+    def test_blogger_list_view_accessable_at_expected_url(self):
+        response = self.client.get('/blog/bloggers/')
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue('bloguser_list' in response.context)
+        self.assertEqual(len(response.context['object_list']), 10)
+
+    def test_blogger_list_view_accessable_at_expected_name(self):
+        response = self.client.get(reverse('bloggers'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue('bloguser_list' in response.context)
+        self.assertEqual(len(response.context['object_list']), 10)
+
+    def test_blogger_list_vew_use_expected_template(self):
+        response = self.client.get(reverse('bloggers'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed('blog/blogger_list.html')
+
