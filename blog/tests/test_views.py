@@ -124,3 +124,38 @@ class BlogListViewTest(TestCase):
         self.assertTrue('is_paginated' in response.context)
         self.assertTrue(response.context['is_paginated'])
         self.assertEqual(len(response.context['object_list']), 1)
+
+
+class BlogDetailViewTest(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        author = BlogUser(username='testbloguser',
+                          first_name='test',
+                          last_name='bloguser',
+                          password='dflewqlr23ru23u3423ryqe9fyq348g',
+                          email='nkdwkfda@qnewfnaf.com',
+                          bio_info='测试用的博客作者')
+        author.save()
+        Blog.objects.create(
+            author=author,
+            content=f'这是一个测试用的博客',
+            name=f'测试博客'
+        ).save()
+
+    def test_blog_detail_view_context(self):
+        response = self.client.get(reverse('blog', kwargs={'pk': 1}))
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue('blog' in response.context)
+
+    def test_blog_detail_view_use_expected_template(self):
+        response = self.client.get(reverse('blog', kwargs={'pk': 1}))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed('blog/blog_detail.html')
+
+    def test_blog_detail_view_is_accessable_at_expected_url(self):
+        response = self.client.get('/blog/blog/1/')
+        self.assertEqual(response.status_code, 200)
+
+    def test_blog_detail_view_is_accessable_at_expected_name(self):
+        response = self.client.get(reverse('blog', kwargs={'pk': 1}))
+        self.assertEqual(response.status_code, 200)
