@@ -196,3 +196,46 @@ class BloggerListViewTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed('blog/blogger_list.html')
 
+
+class CommentCreateViewTest(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        author = BlogUser.objects.create_user(username='testbloguser',
+                                              first_name='test',
+                                              last_name='bloguser',
+                                              password='dflewqlr23ru23u3423ryqe9fyq348g',
+                                              email='nkdwkfda@qnewfnaf.com',
+                                              bio_info='测试用的博客作者')
+        author.save()
+        Blog.objects.create(
+            author=author,
+            content=f'这是一个测试用的博客',
+            name=f'测试博客'
+        ).save()
+        normal_bloguser = BlogUser.objects.create_user(username='normal_bloguser',
+                                                       first_name='normal',
+                                                       last_name='bloguser',
+                                                       password='dflewqlr23ru23u3423ryqe9fyq348g',
+                                                       email='nkdwkfda@qnewfnaf.com',
+                                                       bio_info='测试用的博客评论者')
+        normal_bloguser.save()
+
+    def test_create_comment_when_not_login(self):
+        response = self.client.get(reverse('comment-create', kwargs={'blog_pk': 1}))
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, reverse('login') + f"?next={reverse('comment-create', kwargs={'blog_pk': 1})}")
+
+    def test_get_create_comment_when_login(self):
+        login = self.client.login(username='normal_bloguser', password='dflewqlr23ru23u3423ryqe9fyq348g')
+        response = self.client.get(reverse('comment-create', kwargs={'blog_pk': 1}))
+        self.assertEqual(response.status_code, 200)
+
+    def test_post_create_comment_when_login(self):
+        login = self.client.login(username='normal_bloguser', password='dflewqlr23ru23u3423ryqe9fyq348g')
+        response = self.client.post(reverse('comment-create', kwargs={'blog_pk': 1}),
+                                    data={'blog': Blog.objects.get(pk=1),
+                                          'bloguser': BlogUser.objects.get(pk=2),
+                                          'content': '测试评论'})
+        self.assertEqual(response.status_code, 302)
+        self.assertTemplateUsed('blog/blog_detail.html')
+        self.assertEqual(response.url, reverse('blog', args=(1,)))
