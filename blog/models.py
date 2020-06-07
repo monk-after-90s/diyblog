@@ -16,6 +16,9 @@ class Blog(models.Model):
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return reverse('blog', args=(str(self.pk),))
+
 
 class Comment(models.Model):
     blog = models.ForeignKey(Blog, on_delete=models.CASCADE)
