@@ -40,4 +40,4 @@ class BlogUser(User):
         return f'{self.last_name} {self.first_name}'
 
     def get_absolute_url(self):
-        return reverse('bloguser-detail', args=[str(self.id)])
+        return reverse('bloguser-detail', args=[str(self.pk)])
