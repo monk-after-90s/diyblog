@@ -40,7 +40,7 @@ class BlogUser(User):
     bio_info = models.TextField(max_length=200, null=True, blank=True, help_text='Enter some biographical information.')
 
     def __str__(self):
-        return f'{self.last_name} {self.first_name}'
+        return f'{self.first_name} {self.last_name}'
 
     def get_absolute_url(self):
         return reverse('bloguser-detail', args=[str(self.pk)])

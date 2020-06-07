@@ -90,7 +90,7 @@ class CommentModelTest(TestCase):
 
     def test_object_name_is_bloguserpost_date_content75(self):
         comment = Comment.objects.get(pk=1)
-        self.assertEqual(str(comment), f'bloguser2 test2({comment.post_datetime}) - {comment.content[:75]}')
+        self.assertEqual(str(comment), f'test2 bloguser2({comment.post_datetime}) - {comment.content[:75]}')
 
     def test_comment_blog_is_Blgo(self):
         comment = Comment.objects.get(pk=1)
