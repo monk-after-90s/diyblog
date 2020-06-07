@@ -84,12 +84,12 @@ class RegisterViewTest(TestCase):
 class BlogListViewTest(TestCase):
     @classmethod
     def setUpTestData(cls):
-        author = BlogUser(username='testbloguser',
-                          first_name='test',
-                          last_name='bloguser',
-                          password='dflewqlr23ru23u3423ryqe9fyq348g',
-                          email='nkdwkfda@qnewfnaf.com',
-                          bio_info='测试用的博客作者')
+        author = BlogUser.objects.create_user(username='testbloguser',
+                                              first_name='test',
+                                              last_name='bloguser',
+                                              password='dflewqlr23ru23u3423ryqe9fyq348g',
+                                              email='nkdwkfda@qnewfnaf.com',
+                                              bio_info='测试用的博客作者')
         author.save()
         for i in range(21):
             Blog.objects.create(
@@ -129,12 +129,12 @@ class BlogListViewTest(TestCase):
 class BlogDetailViewTest(TestCase):
     @classmethod
     def setUpTestData(cls):
-        author = BlogUser(username='testbloguser',
-                          first_name='test',
-                          last_name='bloguser',
-                          password='dflewqlr23ru23u3423ryqe9fyq348g',
-                          email='nkdwkfda@qnewfnaf.com',
-                          bio_info='测试用的博客作者')
+        author = BlogUser.objects.create_user(username='testbloguser',
+                                              first_name='test',
+                                              last_name='bloguser',
+                                              password='dflewqlr23ru23u3423ryqe9fyq348g',
+                                              email='nkdwkfda@qnewfnaf.com',
+                                              bio_info='测试用的博客作者')
         author.save()
         Blog.objects.create(
             author=author,
@@ -165,12 +165,12 @@ class BloggerListViewTest(TestCase):
     @classmethod
     def setUpTestData(cls):
         for i in range(17):
-            author = BlogUser(username=f'testbloguser{i}',
-                              first_name=f'test{i}',
-                              last_name=f'bloguser{i}',
-                              password='dflewqlr23ru23u3423ryqe9fyq348g',
-                              email='nkdwkfda@qnewfnaf.com',
-                              bio_info=f'测试用的博客作者{i}')
+            author = BlogUser.objects.create_user(username=f'testbloguser{i}',
+                                                  first_name=f'test{i}',
+                                                  last_name=f'bloguser{i}',
+                                                  password='dflewqlr23ru23u3423ryqe9fyq348g',
+                                                  email='nkdwkfda@qnewfnaf.com',
+                                                  bio_info=f'测试用的博客作者{i}')
             author.save()
             if i < 10:
                 Blog.objects.create(
