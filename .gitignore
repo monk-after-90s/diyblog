@@ -2,7 +2,6 @@
 *.bak
 
 # Database
-*.sqlite3
 *__pycache__*
 .DS_Store
 .idea/
